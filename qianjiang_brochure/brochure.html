@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>QJMOTOR 闪300 产品手册</title>
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", "Helvetica Neue", sans-serif;
+    color: #111;
+    background: #e0e0e0;
+  }
+  .page {
+    width: 210mm;
+    height: 297mm;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    background: #fff;
+  }
+  .page:last-child {
+    page-break-after: auto;
+  }
+
+  /* ===== 颜色变量 ===== */
+  :root {
+    --navy: #0D1B2A;
+    --navy-light: #1B2D45;
+    --gold: #C9A961;
+    --gold-light: #E0C98F;
+    --black: #111111;
+    --white: #FFFFFF;
+    --gray: #666;
+    --light-gray: #F5F5F5;
+    --border: #E0E0E0;
+  }
+
+  /* ===== 封面页 ===== */
+  .cover {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1B2D45 50%, #0D1B2A 100%);
+    color: #fff;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 50%, rgba(201,169,97,0.08) 0%, transparent 60%);
+  }
+  .cover-gold-line {
+    position: absolute;
+    top: 25mm;
+    left: 20mm;
+    width: 60mm;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .cover-brand {
+    position: absolute;
+    top: 30mm;
+    left: 20mm;
+    font-size: 11pt;
+    letter-spacing: 6px;
+    color: var(--gold);
+    font-weight: 300;
+  }
+  .cover-title {
+    position: absolute;
+    top: 42mm;
+    left: 20mm;
+    font-size: 38pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.2;
+  }
+  .cover-title .gold {
+    color: var(--gold);
+  }
+  .cover-subtitle {
+    position: absolute;
+    top: 62mm;
+    left: 20mm;
+    font-size: 14pt;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 3px;
+  }
+  .cover-desc {
+    position: absolute;
+    top: 75mm;
+    left: 20mm;
+    width: 85mm;
+    font-size: 9.5pt;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.55);
+    font-weight: 300;
+  }
+  .cover-image {
+    position: absolute;
+    right: -10mm;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 140mm;
+    height: 140mm;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  }
+  .cover-bottom {
+    position: absolute;
+    bottom: 20mm;
+    left: 20mm;
+    right: 20mm;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .cover-tag {
+    font-size: 8pt;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 2px;
+  }
+  .cover-page-num {
+    font-size: 9pt;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+
+  /* ===== 通用内页 ===== */
+  .inner-page {
+    padding: 20mm 18mm 18mm 18mm;
+    background: #fff;
+  }
+  .page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10mm;
+    padding-bottom: 5mm;
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header-icon {
+    width: 10mm;
+    height: 10mm;
+    background: var(--navy);
+    border-radius: 2mm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 4mm;
+    font-size: 14pt;
+    color: var(--gold);
+  }
+  .page-header-title {
+    font-size: 20pt;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 1px;
+  }
+  .page-header-sub {
+    font-size: 9pt;
+    color: var(--gray);
+    margin-left: 3mm;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+  .page-footer {
+    position: absolute;
+    bottom: 12mm;
+    left: 18mm;
+    right: 18mm;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8pt;
+    color: #999;
+    border-top: 1px solid var(--border);
+    padding-top: 3mm;
+  }
+
+  /* ===== 核心参数页 ===== */
+  .params-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin-top: 4mm;
+  }
+  .param-card {
+    background: var(--light-gray);
+    border-left: 3px solid var(--gold);
+    padding: 4mm 5mm;
+    border-radius: 1mm;
+  }
+  .param-label {
+    font-size: 8.5pt;
+    color: var(--gray);
+    margin-bottom: 1.5mm;
+    letter-spacing: 0.5px;
+  }
+  .param-value {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.4;
+  }
+  .param-value .highlight {
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .param-note {
+    font-size: 8pt;
+    color: var(--gray);
+    margin-top: 1mm;
+    line-height: 1.5;
+  }
+  .params-full {
+    grid-column: 1 / -1;
+  }
+
+  /* ===== 价格页 ===== */
+  .price-hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: #fff;
+    padding: 8mm;
+    border-radius: 2mm;
+    text-align: center;
+    margin-bottom: 6mm;
+  }
+  .price-hero-label {
+    font-size: 10pt;
+    color: var(--gold);
+    letter-spacing: 3px;
+    margin-bottom: 2mm;
+  }
+  .price-hero-value {
+    font-size: 32pt;
+    font-weight: 700;
+    color: #fff;
+  }
+  .price-hero-value .unit {
+    font-size: 14pt;
+    font-weight: 400;
+    margin-left: 2mm;
+  }
+  .price-hero-note {
+    font-size: 9pt;
+    color: rgba(255,255,255,0.5);
+    margin-top: 2mm;
+  }
+  .price-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3mm;
+  }
+  .price-item {
+    display: flex;
+    align-items: center;
+    padding: 4mm 5mm;
+    background: var(--light-gray);
+    border-radius: 1mm;
+    border: 1px solid var(--border);
+  }
+  .price-item.current {
+    border-color: var(--gold);
+    background: #FDF8EE;
+  }
+  .price-item-badge {
+    background: var(--gold);
+    color: #fff;
+    font-size: 7pt;
+    padding: 1mm 2.5mm;
+    border-radius: 1mm;
+    margin-right: 3mm;
+    white-space: nowrap;
+  }
+  .price-item-name {
+    flex: 1;
+    font-size: 10.5pt;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .price-item-value {
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .price-item-value .small {
+    font-size: 9pt;
+    font-weight: 400;
+  }
+  .price-landing {
+    margin-top: 6mm;
+    padding: 5mm;
+    background: #FDF8EE;
+    border: 1px dashed var(--gold);
+    border-radius: 1mm;
+    text-align: center;
+  }
+  .price-landing-title {
+    font-size: 10pt;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 1.5mm;
+  }
+  .price-landing-text {
+    font-size: 9.5pt;
+    color: var(--gray);
+  }
+
+  /* ===== 优缺点页 ===== */
+  .pros-cons-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4mm;
+    margin-top: 4mm;
+  }
+  .pro-item, .con-item {
+    display: flex;
+    padding: 4mm 5mm;
+    border-radius: 1mm;
+    align-items: flex-start;
+  }
+  .pro-item {
+    background: #F0F7F0;
+    border-left: 3px solid #4A9B5E;
+  }
+  .con-item {
+    background: #FBF0F0;
+    border-left: 3px solid #C45C5C;
+  }
+  .item-num {
+    width: 7mm;
+    height: 7mm;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9pt;
+    font-weight: 700;
+    color: #fff;
+    margin-right: 4mm;
+    flex-shrink: 0;
+  }
+  .pro-item .item-num {
+    background: #4A9B5E;
+  }
+  .con-item .item-num {
+    background: #C45C5C;
+  }
+  .item-text {
+    font-size: 10pt;
+    line-height: 1.7;
+    color: #333;
+  }
+  .item-text strong {
+    color: var(--navy);
+  }
+
+  /* ===== 版本区分页 ===== */
+  .version-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6mm;
+    margin-top: 6mm;
+  }
+  .version-card {
+    border: 1px solid var(--border);
+    border-radius: 2mm;
+    overflow: hidden;
+  }
+  .version-card-header {
+    padding: 5mm;
+    text-align: center;
+  }
+  .version-card.old .version-card-header {
+    background: var(--light-gray);
+  }
+  .version-card.new .version-card-header {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
+    color: #fff;
+  }
+  .version-name {
+    font-size: 14pt;
+    font-weight: 700;
+    margin-bottom: 1mm;
+  }
+  .version-card.new .version-name {
+    color: var(--gold);
+  }
+  .version-tag {
+    font-size: 8pt;
+    color: var(--gray);
+    letter-spacing: 1px;
+  }
+  .version-card.new .version-tag {
+    color: rgba(255,255,255,0.6);
+  }
+  .version-card-body {
+    padding: 5mm;
+  }
+  .version-feature {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 3mm;
+    font-size: 9.5pt;
+    line-height: 1.6;
+    color: #444;
+  }
+  .version-feature::before {
+    content: '▸';
+    color: var(--gold);
+    margin-right: 2mm;
+    font-weight: 700;
+  }
+  .version-card.new .version-feature::before {
+    color: var(--gold);
+  }
+  .version-note {
+    margin-top: 8mm;
+    padding: 5mm;
+    background: var(--light-gray);
+    border-radius: 1mm;
+    font-size: 9.5pt;
+    line-height: 1.7;
+    color: var(--gray);
+    text-align: center;
+  }
+
+  /* ===== 配色页 ===== */
+  .color-section {
+    margin-top: 6mm;
+  }
+  .color-title {
+    text-align: center;
+    font-size: 12pt;
+    color: var(--navy);
+    font-weight: 600;
+    margin-bottom: 6mm;
+    letter-spacing: 2px;
+  }
+  .color-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5mm;
+  }
+  .color-card {
+    text-align: center;
+  }
+  .color-image-wrap {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 2mm;
+    overflow: hidden;
+    margin-bottom: 3mm;
+    border: 1px solid var(--border);
+  }
+  .color-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .color-name {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1mm;
+  }
+  .color-swatch {
+    display: inline-block;
+    width: 5mm;
+    height: 5mm;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    vertical-align: middle;
+    margin-right: 1.5mm;
+  }
+  .color-desc {
+    font-size: 8.5pt;
+    color: var(--gray);
+  }
+
+  /* 装饰元素 */
+  .deco-corner {
+    position: absolute;
+    width: 20mm;
+    height: 20mm;
+    border: 2px solid var(--gold);
+    opacity: 0.3;
+  }
+  .deco-corner.tl { top: 8mm; left: 8mm; border-right: none; border-bottom: none; }
+  .deco-corner.br { bottom: 8mm; right: 8mm; border-left: none; border-top: none; }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 第1页：封面 ===== -->
+<div class="page cover">
+  <div class="cover-gold-line"></div>
+  <div class="cover-brand">QJMOTOR</div>
+  <div class="cover-title">
+    钱江闪<span class="gold">300</span>
+  </div>
+  <div class="cover-subtitle">BOBBER 复古巡航摩托车</div>
+  <div class="cover-desc">
+    国产热门Bobber复古巡航摩托车，主打低座高、轻车身，对新手、小个子骑手非常友好。分为手动挡老款与AMT手自一体自动挡新款两大版本，城市通勤的理想之选。
+  </div>
+  <img class="cover-image" src="cover.jpg" alt="QJMOTOR 闪300">
+  <div class="cover-bottom">
+    <div class="cover-tag">PRODUCT BROCHURE · 2026</div>
+    <div class="cover-page-num">01 / 07</div>
+  </div>
+</div>
+
+<!-- ===== 第2页：核心参数 ===== -->
+<div class="page inner-page">
+  <div class="deco-corner tl"></div>
+  <div class="deco-corner br"></div>
+  <div class="page-header">
+    <div class="page-header-icon">⚙</div>
+    <div class="page-header-title">核心参数</div>
+    <div class="page-header-sub">2026 AMT-4.0 新款</div>
+  </div>
+
+  <div class="params-grid">
+    <div class="param-card">
+      <div class="param-label">发动机</div>
+      <div class="param-value">296cc 60°V型双缸</div>
+      <div class="param-note">水冷八气门，带平衡轴</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">最大功率</div>
+      <div class="param-value"><span class="highlight">22.6kW</span>（30.7匹）</div>
+      <div class="param-note">/ 9000rpm</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">最大扭矩</div>
+      <div class="param-value"><span class="highlight">26N·m</span> / 7000rpm</div>
+      <div class="param-note">低扭充沛，适合城市通勤</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">座高</div>
+      <div class="param-value"><span class="highlight">700mm</span></div>
+      <div class="param-note">身高155cm大多可全脚掌着地</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">整备质量</div>
+      <div class="param-value">168kg（自动挡）</div>
+      <div class="param-note">手动版163kg，挪车轻松</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">油箱容量</div>
+      <div class="param-value"><span class="highlight">13.5L</span></div>
+      <div class="param-note">综合油耗约3L，续航约400km</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">传动系统</div>
+      <div class="param-value">皮带传动</div>
+      <div class="param-note">静音、免维护，无需频繁保养</div>
+    </div>
+    <div class="param-card">
+      <div class="param-label">变速箱</div>
+      <div class="param-value">AMT 4.0 手自一体</div>
+      <div class="param-note">D自动 / M手动拨片 / DS运动模式</div>
+    </div>
+    <div class="param-card params-full">
+      <div class="param-label">安全配置 & 尺寸</div>
+      <div class="param-value">双通道ABS + TCS牵引力控制系统 ｜ 2110×840×1080mm，轴距1400mm</div>
+      <div class="param-note">低速蠕行模式，不用捏离合，堵车非常省力</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>QJMOTOR 闪300 · 核心参数</span>
+    <span>02 / 07</span>
+  </div>
+</div>
+
+<!-- ===== 第3页：价格 ===== -->
+<div class="page inner-page">
+  <div class="deco-corner tl"></div>
+  <div class="deco-corner br"></div>
+  <div class="page-header">
+    <div class="page-header-icon">💰</div>
+    <div class="page-header-title">价格</div>
+    <div class="page-header-sub">裸车价 · 2026年</div>
+  </div>
+
+  <div class="price-hero">
+    <div class="price-hero-label">2026款 AMT 4.0 自动挡 · 当前主力在售</div>
+    <div class="price-hero-value">20,999<span class="unit">元</span></div>
+    <div class="price-hero-note">推荐版本 · 手自一体 · 城市通勤首选</div>
+  </div>
+
+  <div class="price-list">
+    <div class="price-item current">
+      <div class="price-item-badge">主推</div>
+      <div class="price-item-name">2026款 AMT 4.0 自动挡</div>
+      <div class="price-item-value">20,999<span class="small"> 元</span></div>
+    </div>
+    <div class="price-item">
+      <div class="price-item-name">老款 手动链条版（闪300S）</div>
+      <div class="price-item-value">21,999<span class="small"> 元</span></div>
+    </div>
+    <div class="price-item">
+      <div class="price-item-name">老款 手动皮带版（闪300S）</div>
+      <div class="price-item-value">22,999<span class="small"> 元</span></div>
+    </div>
+  </div>
+
+  <div class="price-landing">
+    <div class="price-landing-title">落地价参考</div>
+    <div class="price-landing-text">在裸车价基础上，大约再加 <strong style="color:var(--navy)">2000 - 2400元</strong>（购置税 + 保险）即可落地</div>
+  </div>
+
+  <div class="page-footer">
+    <span>QJMOTOR 闪300 · 价格信息</span>
+    <span>03 / 07</span>
+  </div>
+</div>
+
+<!-- ===== 第4页：优点 ===== -->
+<div class="page inner-page">
+  <div class="deco-corner tl"></div>
+  <div class="deco-corner br"></div>
+  <div class="page-header">
+    <div class="page-header-icon">✨</div>
+    <div class="page-header-title">优点</div>
+    <div class="page-header-sub">五大核心优势</div>
+  </div>
+
+  <div class="pros-cons-list">
+    <div class="pro-item">
+      <div class="item-num">1</div>
+      <div class="item-text"><strong>超低座高 + 轻量化车身：</strong>700mm座高配合163-168kg整备质量，对小个子、女生新手非常友好，不容易倒车，挪车轻松。</div>
+    </div>
+    <div class="pro-item">
+      <div class="item-num">2</div>
+      <div class="item-text"><strong>V缸声浪 + 皮带传动：</strong>60°V型双缸发动机声浪浑厚，皮带传动骑行安静、免维护，不用频繁保养链条。</div>
+    </div>
+    <div class="pro-item">
+      <div class="item-num">3</div>
+      <div class="item-text"><strong>AMT自动挡体验佳：</strong>不用油离配合，杜绝起步熄火，D自动/M手动/DS运动三种模式，城市通勤、红绿灯多的路况体验极佳。</div>
+    </div>
+    <div class="pro-item">
+      <div class="item-num">4</div>
+      <div class="item-text"><strong>复古Bobber外观：</strong>经典Bobber造型，改装空间大（边包、靠背、护杠等），拍照好看，个性十足。</div>
+    </div>
+    <div class="pro-item">
+      <div class="item-num">5</div>
+      <div class="item-text"><strong>安全配置到位：</strong>标配双通道ABS + TCS牵引力控制系统，湿滑路面防打滑，骑行安全性高。</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>QJMOTOR 闪300 · 产品优势</span>
+    <span>04 / 07</span>
+  </div>
+</div>
+
+<!-- ===== 第5页：缺点 ===== -->
+<div class="page inner-page">
+  <div class="deco-corner tl"></div>
+  <div class="deco-corner br"></div>
+  <div class="page-header">
+    <div class="page-header-icon">⚠</div>
+    <div class="page-header-title">缺点</div>
+    <div class="page-header-sub">客观告知 · 理性选择</div>
+  </div>
+
+  <div class="pros-cons-list">
+    <div class="con-item">
+      <div class="item-num">1</div>
+      <div class="item-text"><strong>高速后段加速一般：</strong>定位城市巡航，超过110km/h再加速偏弱，不适合暴力跑高速或长途极速骑行。</div>
+    </div>
+    <div class="con-item">
+      <div class="item-num">2</div>
+      <div class="item-text"><strong>原厂后减震偏软：</strong>重载或载人过坑洼路面时容易触底，对载重场景的适应性一般。</div>
+    </div>
+    <div class="con-item">
+      <div class="item-num">3</div>
+      <div class="item-text"><strong>AMT低速偶有顿挫：</strong>虽然4.0版本已大幅优化，但低速行驶时偶尔还会有轻微换挡顿挫感。</div>
+    </div>
+    <div class="con-item">
+      <div class="item-num">4</div>
+      <div class="item-text"><strong>老款品控有瑕疵：</strong>早期老款存在装配小瑕疵，2026新款品控已经改善很多，建议优先选择新款。</div>
+    </div>
+  </div>
+
+  <div style="margin-top: 10mm; padding: 6mm; background: var(--navy); border-radius: 2mm; text-align: center;">
+    <div style="color: var(--gold); font-size: 11pt; font-weight: 600; margin-bottom: 2mm;">选购建议</div>
+    <div style="color: rgba(255,255,255,0.7); font-size: 9.5pt; line-height: 1.8;">
+      城市通勤为主、新手或小个子骑手 → 首选 <strong style="color:#fff">2026 AMT 4.0自动挡</strong><br>
+      追求驾驶乐趣、有骑行经验 → 可考虑老款手动挡
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>QJMOTOR 闪300 · 注意事项</span>
+    <span>05 / 07</span>
+  </div>
+</div>
+
+<!-- ===== 第6页：版本区分 ===== -->
+<div class="page inner-page">
+  <div class="deco-corner tl"></div>
+  <div class="deco-corner br"></div>
+  <div class="page-header">
+    <div class="page-header-icon">🆚</div>
+    <div class="page-header-title">版本区分</div>
+    <div class="page-header-sub">新老版本对比</div>
+  </div>
+
+  <div class="version-compare">
+    <div class="version-card old">
+      <div class="version-card-header">
+        <div class="version-name">闪300S</div>
+        <div class="version-tag">早期老款 · 手动变速箱</div>
+      </div>
+      <div class="version-card-body">
+        <div class="version-feature">手动变速箱，需要油离配合</div>
+        <div class="version-feature">分链条版 / 皮带版两种传动</div>
+        <div class="version-feature">链条版 21,999元 / 皮带版 22,999元</div>
+        <div class="version-feature">整备质量约163kg</div>
+        <div class="version-feature">部分早期车型存在装配小瑕疵</div>
+        <div class="version-feature">适合有骑行经验、追求驾驶乐趣的用户</div>
+      </div>
+    </div>
+
+    <div class="version-card new">
+      <div class="version-card-header">
+        <div class="version-name">闪300 AMT</div>
+        <div class="version-tag">2026新款 · 手自一体 · 主推</div>
+      </div>
+      <div class="version-card-body">
+        <div class="version-feature">AMT 4.0手自一体变速箱，不用捏离合</div>
+        <div class="version-feature">D自动 / M手动拨片 / DS运动三种模式</div>
+        <div class="version-feature">售价 20,999元（性价比更高）</div>
+        <div class="version-feature">整备质量约168kg</div>
+        <div class="version-feature">2026新款品控大幅改善</div>
+        <div class="version-feature">适合新手、城市通勤、小个子骑手</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="version-note">
+    <strong style="color:var(--navy)">总结：</strong>2026款 AMT 4.0自动挡在价格更低的同时，配置更先进、体验更友好，是当前的<strong style="color:var(--gold)">首选推荐版本</strong>。老款手动挡适合追求传统换挡乐趣的有经验骑手。
+  </div>
+
+  <div class="page-footer">
+    <span>QJMOTOR 闪300 · 版本对比</span>
+    <span>06 / 07</span>
+  </div>
+</div>
+
+<!-- ===== 第7页：主流配色 ===== -->
+<div class="page inner-page">
+  <div class="deco-corner tl"></div>
+  <div class="deco-corner br"></div>
+  <div class="page-header">
+    <div class="page-header-icon">🎨</div>
+    <div class="page-header-title">主流配色</div>
+    <div class="page-header-sub">三款经典配色</div>
+  </div>
+
+  <div class="color-section">
+    <div class="color-title">— 总有一款适合你 —</div>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-image-wrap">
+          <img src="color_orange.jpg" alt="炫酷橙">
+        </div>
+        <div class="color-name">
+          <span class="color-swatch" style="background: #E85D2A;"></span>炫酷橙
+        </div>
+        <div class="color-desc">活力张扬，个性之选</div>
+      </div>
+      <div class="color-card">
+        <div class="color-image-wrap">
+          <img src="color_black.jpg" alt="磨砂黑">
+        </div>
+        <div class="color-name">
+          <span class="color-swatch" style="background: #2A2A2A;"></span>磨砂黑
+        </div>
+        <div class="color-desc">低调沉稳，酷感十足</div>
+      </div>
+      <div class="color-card">
+        <div class="color-image-wrap">
+          <img src="color_white.jpg" alt="意满白">
+        </div>
+        <div class="color-name">
+          <span class="color-swatch" style="background: #F0E8D8; border-color: #ccc;"></span>意满白
+        </div>
+        <div class="color-desc">温润复古，优雅耐看</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 12mm; padding: 8mm; background: linear-gradient(135deg, var(--navy), var(--navy-light)); border-radius: 2mm; text-align: center;">
+    <div style="color: var(--gold); font-size: 16pt; font-weight: 700; letter-spacing: 3px; margin-bottom: 2mm;">QJMOTOR 闪300</div>
+    <div style="color: rgba(255,255,255,0.6); font-size: 9pt; letter-spacing: 2px;">BOBBER 复古巡航 · 城市通勤首选</div>
+    <div style="width: 30mm; height: 1px; background: var(--gold); margin: 4mm auto;"></div>
+    <div style="color: rgba(255,255,255,0.4); font-size: 8pt;">本手册仅供参考，具体配置以官方发布为准</div>
+  </div>
+
+  <div class="page-footer">
+    <span>QJMOTOR 闪300 · 配色展示</span>
+    <span>07 / 07</span>
+  </div>
+</div>
+
+</body>
+</html>
